@@ -20,7 +20,7 @@ def index_login():
 
 @app.route('/settings')
 def index_settings():
-    return 'Hello World!'
+    return render_template("home/settings.html")
 
 
 @app.route('/amoconnect')

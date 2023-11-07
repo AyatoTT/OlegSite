@@ -1,0 +1,73 @@
+{% extends 'core/base.html' %}
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ url_for('static', filename='ccs/home.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='ccs/settings.css') }}">
+
+{% block content %}
+    <div class="container px-5 py-5 pb-4" style="border-bottom: solid black;">
+        <h1 class="text-dark">Настройки сервиса</h1>
+    </div>
+    <div class="container px-5  ">
+        <h5 class="mt-5 px-5 py-5 pb-4" style="border-bottom: solid black;">Если вы хотите проводить квалификацию
+            клиента, пожалуйста, добавьте поля:</h5>
+        <div class="mb-0" id="loaded-elements">
+            <div class="container rule row mb-2">
+                <div class="col-3 d-flex align-items-center" style="padding: 0px">
+                    <input name="field-name" class="m-0 input-group-text w-100" value="{{ k }}">
+                </div>
+                <div class=" col-8 d-flex align-items-center " style="padding: 0px 0px 0px 5px">
+                    <input class="form-control  w-100 pr-0 " name="field-value" value="{{ v }}">
+                </div>
+                <div class="col-1 d-flex align-items-center" style="padding: 0px 5px">
+                    <button type="button" class="btn btn-outline-danger"
+                            onclick="deleteLoadedQualificationField(this.parentNode);">Удалить
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="added-elements"></div>
+
+        <button class="input-group-text mt-2" type="button" id="plus_field" onclick="addQualificationField();">Добавить
+            поле
+        </button>
+    </div>
+    <script>
+        function addQualificationField() {
+            var container = document.getElementById("added-elements");
+
+            var newInputField = document.createElement("div");
+            newInputField.className = "rule input-group-prepend";
+            newInputField.innerHTML = `<div class="container rule row mb-2">
+                <div class="col-3 d-flex align-items-center" style="padding: 0px">
+                    <input name="field-name" class="m-0 input-group-text w-100" value="{{ k }}">
+                </div>
+                <div class=" col-8 d-flex align-items-center " style="padding: 0px 0px 0px 5px">
+                    <input class="form-control  w-100 pr-0 " name="field-value" value="{{ v }}">
+                </div>
+                <div class="col-1 d-flex align-items-center" style="padding: 0px 5px">
+                    <button type="button" class="btn btn-outline-danger"
+                            onclick="deleteLoadedQualificationField(this.parentNode);">Удалить
+                    </button>
+                </div>
+            </div>
+
+            `;
+            container.appendChild(newInputField);
+        }
+    </script>
+    <script>
+        function deleteLoadedQualificationField(button) {
+            var rule = button.closest('.rule'); // Находим ближайший родительский элемент с классом .rule
+            if (rule) {
+                rule.remove(); // Удаляем найденный элемент
+            }
+        }
+    </script>
+{% endblock %}
